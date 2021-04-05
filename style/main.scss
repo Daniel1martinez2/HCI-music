@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.matrix {
+  background-color: blue;
+  width: 50vmin;
+  height: 50vmin;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  .cell {
+    border: solid black 1px;
+    width: 10vmin;
+    height: 10vmin;
+    background-color: gray;
+    &--active {
+      background-color: green;
+    }
+    &--wrong {
+      background-color: red;
+    }
+  }
+}
+
+button {
+  position: absolute;
+  top: 200px;
+  right: 300px;
+}

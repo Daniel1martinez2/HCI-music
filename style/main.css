@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.matrix {
+  background-color: blue;
+  width: 50vmin;
+  height: 50vmin;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+}
+
+.matrix .cell {
+  border: solid black 1px;
+  width: 10vmin;
+  height: 10vmin;
+  background-color: gray;
+}
+
+.matrix .cell--active {
+  background-color: green;
+}
+
+.matrix .cell--wrong {
+  background-color: red;
+}
+
+button {
+  position: absolute;
+  top: 200px;
+  right: 300px;
+}
+/*# sourceMappingURL=main.css.map */
