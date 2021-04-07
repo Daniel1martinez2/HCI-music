@@ -4,29 +4,28 @@ const button = document.querySelector('button');
 const noteTime = 2000 / 2;
 const pattern = [4, 5, 20, 12, 13, 14, 15, ];
 
-const gradientTransition = () => {
+const gradientTransition = (r1, g1, b1, r2, g2, b2, steps) => {
   const colors = [];
-  for (let index = 0; index < 25; index++) {
+  for (let index = 1; index < steps + 1; index++) {
+    const rm = (r2 - r1) / (steps - 1);
+    const gm = (g2 - g1) / (steps - 1);
+    const bm = (b2 - b1) / (steps - 1);
     colors.push({
-      R: parseInt(153 - (5.7917 * index)),
-      G: parseInt(179 - (5.416 * index)),
-      B: parseInt(250 - (4.25 * index))
+      R: parseInt((rm * index) + rm + r1),
+      G: parseInt((gm * index) + gm + g1),
+      B: parseInt((bm * index) + bm + b1),
     });
   };
   return colors;
 };
 
-
-
 const resetMatrix = () => {
   cells.forEach((obj, index) => {
     //obj.classList.remove('cell--active');
     //obj.classList.remove('cell--wrong');
-    obj.style.backgroundColor =
-      `rgb(${gradientTransition()[index].R},
-    ${gradientTransition()[index].G},
-    ${gradientTransition()[index].B})`;
-
+    const cellsColor = gradientTransition(153, 179, 250, 14, 49, 148, cells.length);
+    obj.style.backgroundColor = `rgb(
+      ${cellsColor[index].R},${cellsColor[index].G},${cellsColor[index].B})`;
   });
 }
 
