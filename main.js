@@ -1,8 +1,8 @@
 const matrix = document.querySelector('.matrix');
 const cells = matrix.querySelectorAll('.cell');
 const button = document.querySelector('button');
-const noteTime = 2000 / 2;
-const pattern = [4, 5, 20, 12, 13, 14, 15, ];
+const noteTime = 2000 / 2.5;
+const pattern = [24, 14, 3, 15, 21];
 
 const gradientTransition = (r1, g1, b1, r2, g2, b2, steps) => {
   const colors = [];
@@ -18,7 +18,12 @@ const gradientTransition = (r1, g1, b1, r2, g2, b2, steps) => {
   };
   return colors;
 };
-
+const beep = (index) => {
+  var snd = new Audio(
+    `./notes/sound${index}.mp3`
+  );
+  snd.play();
+};
 const resetMatrix = () => {
   cells.forEach((obj, index) => {
     //obj.classList.remove('cell--active');
@@ -36,6 +41,7 @@ const simonSays = (list) => {
   let interval = setInterval(() => {
     resetMatrix();
     setTimeout(() => {
+      beep(pattern[index]);
       //cells[pattern[index]].classList.add('cell--active');
       cells[pattern[index]].style.backgroundColor = 'green';
       index++;
@@ -51,9 +57,12 @@ const simonSays = (list) => {
   }, noteTime);
 };
 
+
+
 button.addEventListener('click', () => {
   resetMatrix();
   simonSays(pattern)
+
 });
 
 const verify = (patternList, matrixObj) => {
@@ -61,6 +70,9 @@ const verify = (patternList, matrixObj) => {
   let index = 0;
   cellsObj.forEach((obj, i) => {
     obj.addEventListener('click', () => {
+
+      beep(i);
+
       if (obj === cellsObj[patternList[index]]) {
         //obj.classList.add('cell--active');
         obj.style.backgroundColor = 'green';
