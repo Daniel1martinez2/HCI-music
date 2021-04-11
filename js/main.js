@@ -38,7 +38,7 @@ const resetMatrix = () => {
 }
 //pattern performance 
 const simonSays = (list) => {
-  message.classList.add('hidden'); 
+  message[1].classList.add('hidden');
   let index = 0;
   let interval = setInterval(() => {
     resetMatrix();
@@ -109,6 +109,11 @@ button.addEventListener('click', () => {
 resetMatrix();
 verify(pattern, matrix);
 
+
+
+
+
+
 //create a cell as an object and save his --------just testing around
 const createCell = (index, color, sound) => {
   const variables = {
@@ -124,6 +129,9 @@ const createCell = (index, color, sound) => {
     variables,
   };
 }
+
+
+
 //testing set variables
 // const cell0 = createCell(0, '22,22,22');
 // console.log(cell0.variables.color);
