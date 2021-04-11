@@ -24,12 +24,6 @@ body {
     width: 10vmin;
     height: 10vmin;
     background-color: gray;
-    &--active {
-      background-color: green;
-    }
-    &--wrong {
-      background-color: red;
-    }
   }
 }
 
@@ -37,4 +31,15 @@ button {
   position: absolute;
   top: 200px;
   right: 300px;
+}
+
+.hidden {
+  display: none;
+}
+
+.active {
+  color: green;
+}
+.wrong {
+  color: red;
 }

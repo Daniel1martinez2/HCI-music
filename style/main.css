@@ -38,17 +38,21 @@ body {
   background-color: gray;
 }
 
-.matrix .cell--active {
-  background-color: green;
-}
-
-.matrix .cell--wrong {
-  background-color: red;
-}
-
 button {
   position: absolute;
   top: 200px;
   right: 300px;
+}
+
+.hidden {
+  display: none;
+}
+
+.active {
+  color: green;
+}
+
+.wrong {
+  color: red;
 }
 /*# sourceMappingURL=main.css.map */
