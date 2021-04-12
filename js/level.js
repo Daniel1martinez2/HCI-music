@@ -3,22 +3,30 @@ const createLevel = ({
   colors,
   size,
   matrix,
-  time
+  time,
+  timerDisplay, 
+  finishLevelFunc,
+  lostByTimeFunc
 }) => {
   const variables = {
     passed: false,
     pattern,
     colors,
     size,
-    cellsNum: Math.pow(size, 2),
-    error: 0, 
-    repetition: 0, 
+    usedTime:0,
+    error: 0,
+    repetition: 0,
+    outOfTime: false, 
+    
   }
   const cells = matrix.querySelectorAll('.cell');
-  cells.forEach(cell => {
-    cell.style.height = `${50/size}vmin`;
-    cell.style.width = `${50/size}vmin`;
-  });
+  //init size of the cells based on the size given
+  const initCellsSize = ()=>{
+    cells.forEach(cell => {
+      cell.style.height = `${50/size}vmin`;
+      cell.style.width = `${50/size}vmin`;
+    });
+  }
   const setPassed = (value) => {
     variables.passed = value;
   }
@@ -42,7 +50,7 @@ const createLevel = ({
     var snd = new Audio(
       `./notes/sound${index}.mp3`
     );
-    snd.volume = 1; 
+    snd.volume = 1;
     snd.play();
   };
   //reset matrix appearance 
@@ -55,6 +63,7 @@ const createLevel = ({
   }
   //pattern performance 
   const simonSays = () => {
+    if (variables.passed) return
     message[1].classList.add('hidden');
     let index = 0;
     let interval = setInterval(() => {
@@ -81,12 +90,17 @@ const createLevel = ({
     let index = 0;
     cellsObj.forEach((obj, i) => {
       obj.addEventListener('click', () => {
+        console.log(variables.passed);
+        if (variables.passed) return
         beep(i); //note sounds
         if (obj === cellsObj[patternList[index]]) {
           //well done
           obj.style.backgroundColor = '#00FFFF';
           if (index >= patternList.length - 1) {
+            variables.passed = true;
             console.log('finish');
+            //IMPORTANT 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+            finishLevelFunc();
             message[1].classList.remove('hidden');
             message[1].classList.add('active');
             index = 0;
@@ -96,7 +110,7 @@ const createLevel = ({
         } else {
           //error
           obj.style.backgroundColor = '#DF6A1E';
-          variables.error++; 
+          variables.error++;
           console.log(variables.error + ' error');
           freezeClick = true;
           setTimeout(() => {
@@ -110,25 +124,36 @@ const createLevel = ({
   }
   //set timer
   //timer 
-  const startTimer = ( display) => {
-    let timer =  time;
+  const startTimer = () => {
+    let timer = time;
     let minutes;
     let seconds;
-    setInterval(() => {
+    let timerInterval = setInterval(() => {
       minutes = parseInt(timer / 60);
       seconds = parseInt(timer % 60);
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
-      display.innerText = minutes + ":" + seconds;
+      timerDisplay.innerText = minutes + ":" + seconds;
       if (--timer < 0) {
         timer = 0;
+        outOfTime= true; 
+        console.log(`time is ${variables.outOfTime}`);
+        lostByTimeFunc(); 
+        clearInterval(timerInterval); 
+      }
+      if (variables.passed){
+        variables.usedTime = seconds; 
+        console.log(variables.usedTime + 'suuuuuu');
+        clearInterval(timerInterval);
       }
     }, 1000);
   }
   //init state
   const startLevel = () => {
+    initCellsSize(); 
     resetMatrix();
     verify(pattern);
+    startTimer();
   }
   return {
     variables,
@@ -136,7 +161,6 @@ const createLevel = ({
     resetMatrix,
     simonSays,
     startLevel,
-    startTimer
-
+    startTimer,
   }
 }
