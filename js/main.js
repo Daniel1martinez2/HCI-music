@@ -8,13 +8,14 @@ let freezeClick = false; // just modify that variable to disable all clicks even
 
 const level1 = createLevel({
   matrix,
-  pattern: [5,24,15,8], 
+  pattern: [3,2,8,1,0,4], 
   colors: {first:[153,179, 250],second:[14, 49, 148] }, 
-  size: 5
+  size: 5, 
+  time: 20
 }); 
 //init level
 level1.startLevel(); 
-level1.startTimer(10, timerText);
+level1.startTimer(timerText);
 
 //Event listeners >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //document click behaviour

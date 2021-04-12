@@ -3,7 +3,7 @@ const createLevel = ({
   colors,
   size,
   matrix,
-  matrixSize
+  time
 }) => {
   const variables = {
     passed: false,
@@ -11,7 +11,6 @@ const createLevel = ({
     colors,
     size,
     cellsNum: Math.pow(size, 2),
-    time: 0, 
     error: 0, 
     repetition: 0, 
   }
@@ -43,6 +42,7 @@ const createLevel = ({
     var snd = new Audio(
       `./notes/sound${index}.mp3`
     );
+    snd.volume = 1; 
     snd.play();
   };
   //reset matrix appearance 
@@ -68,7 +68,6 @@ const createLevel = ({
           clearInterval(interval);
           setTimeout(() => {
             console.log('ya');
-
             freezeClick = false;
             resetMatrix();
           }, noteTime);
@@ -109,20 +108,17 @@ const createLevel = ({
       });
     })
   }
-
   //set timer
   //timer 
-  const startTimer = (duration, display) => {
-    let timer = duration;
+  const startTimer = ( display) => {
+    let timer =  time;
     let minutes;
     let seconds;
     setInterval(() => {
       minutes = parseInt(timer / 60);
       seconds = parseInt(timer % 60);
-
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
-
       display.innerText = minutes + ":" + seconds;
       if (--timer < 0) {
         timer = 0;
