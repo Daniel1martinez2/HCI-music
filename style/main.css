@@ -9,6 +9,42 @@
   font-size: 3vmin;
 }
 
+.screen {
+  background-image: url("../lib/img/background.png");
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20vmin;
+}
+
+.screen__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.screen__content img {
+  width: 50vmin;
+  margin-bottom: 5vmin;
+}
+
 .game {
   background-image: url("../lib/img/background.png");
   background-size: cover;
@@ -129,5 +165,22 @@ button:hover {
 
 .wrong {
   color: red;
+}
+
+.result {
+  width: 100vw;
+  height: 100vh;
+}
+
+.result img {
+  width: 100%;
+}
+
+.loose {
+  background-color: #B6744F;
+}
+
+.win {
+  background-color: #3762EF;
 }
 /*# sourceMappingURL=main.css.map */

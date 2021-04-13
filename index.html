@@ -10,9 +10,23 @@
 </head>
 
 <body>
-
-  <main class="game">
-
+  <!-- start screen -->
+  <main class="screen ">
+    <div class="screen__content">
+      <img src="./lib/img/brand.png" alt="">
+      <button class="screen__btn">Play</button>
+    </div>
+  </main>
+  <!-- win screen -->
+  <main class="result win hidden ">
+    <img src="./lib/img/win.jpg" alt="">
+  </main>
+  <!-- loose screen -->
+  <main class="result loose hidden">
+    <img src="./lib/img/loose.jpg" alt="">
+  </main>
+  <!-- game screen -->
+  <main class="game hidden">
     <article class="game__prime">
       <img class="game__logo" src="./lib/img/brand.png" alt="">
       <article class="matrix">
@@ -53,7 +67,7 @@
         <div class="cell"></div>
         <div class="cell"></div>
       </article>
-      <button>Start</button>
+      <button class="game__start-btn">Start</button>
     </article>
     <aside class="game__msgs-rigth">
       <div class="game__message">

@@ -1,14 +1,32 @@
+//Screen stuff variables
+const firstScreenBtn = document.querySelector('.screen__btn');
+const firstScreen = document.querySelector('.screen');
+const mainScreen = document.querySelector('.game');
+const winScreen = document.querySelector('.win');
+const looseScreen = document.querySelector('.loose');
+//main variables
 const message = document.querySelectorAll('.message');
 const matrix = document.querySelector('.matrix');
 const cells = matrix.querySelectorAll('.cell');
-const button = document.querySelector('button');
+const button = document.querySelector('.game__start-btn');
 const noteTime = 2000 / 2.5;
 const timerText = document.querySelector('.time');
-let freezeClick = false; 
+let freezeClick = false;
+let currentLevel; //represents the game current displayed
 const result = {
-  error: 0, 
-  repetition:0,
-}; 
+  error: 0,
+  repetition: 0,
+};
+//win and loose general functions
+const handleLoose = () => {
+  mainScreen.classList.add('hidden');
+  looseScreen.classList.remove('hidden');
+}
+const handleWin = () => {
+  mainScreen.classList.add('hidden');
+  winScreen.classList.remove('hidden');
+}
+//creating the levels
 const level1 = createLevel({
   matrix,
   pattern: [0, 1, 2, 3],
@@ -27,7 +45,7 @@ const level1 = createLevel({
   },
   lostByTimeFunc: () => {
     console.log('lost by time');
-
+    handleLoose(); 
   }
 });
 const level2 = createLevel({
@@ -42,22 +60,21 @@ const level2 = createLevel({
   timerDisplay: timerText,
   finishLevelFunc: () => {
     console.log('esta es una pruebaaa');
-    result.error =+ level1.variables.error + level2.variables.error; 
-    console.log(result.error);
+    handleWin(); 
+    //result.error = +level1.variables.error + level2.variables.error;
+    //console.log(result.error + 'total errors');
   },
   lostByTimeFunc: () => {
     console.log('lost by time');
+    handleLoose(); 
   }
 });
-//init level
-let currentLevel = level1;
-currentLevel.startLevel();
-
+//init level >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+currentLevel = level1;
 
 //Event listeners >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //document click behaviour
 document.addEventListener("click", e => {
-  //console.log(timerText.innerHTML); >>>>>>>>>>>>>>>>>>>>>>>>
   if (freezeClick) {
     e.stopPropagation();
     e.preventDefault();
@@ -70,3 +87,10 @@ button.addEventListener('click', () => {
   currentLevel.variables.repetition++;
   console.log(currentLevel.variables.repetition);
 });
+firstScreenBtn.addEventListener('click', () => {
+  firstScreen.classList.add('hidden');
+  mainScreen.classList.remove('hidden');
+  currentLevel.startLevel();
+})
+
+
