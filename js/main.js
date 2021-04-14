@@ -67,7 +67,7 @@ const level1 = createLevel({
   lostFunc: handleLoose
   ,
   levelTime,
-  allowedErrors:1,
+  allowedErrors:3,
 });
 // level 2 ---------------------------------------------------------
 const level2 = createLevel({
@@ -149,7 +149,6 @@ restartLevel.addEventListener('click',()=>{
     currentLevel.variables.pattern[i]= parseInt(Math.random()*Math.pow(currentLevel.variables.size,2)); 
     console.log(currentLevel.variables.pattern);
   });
-  //currentLevel.variables.pattern = [0,0,0]; 
   pressStartMsg.classList.remove('hidden'); 
   currentLevel.variables.wasStarted = false
 
