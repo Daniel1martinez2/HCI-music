@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Londrina Solid', cursive;
 }
 .text{
   font-size: 3vmin;
@@ -23,7 +26,22 @@
     }
   }
 }
+.instructions{
+  position: relative;
+  width: 100vw;
+  video{
+    width: 100%;
+  }
+  button{
+    font-size: 3vmin;
+    position: absolute;
+    bottom: -2vmin;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%,-50%);
 
+  }
+}
 .game {
   background-image: url('../lib/img/background.png');
   background-size: cover;
@@ -124,4 +142,10 @@ button {
 }
 .win{
   background-color: #3762EF;
+}
+.time{
+  color: #3762EF;
+}
+.level-msgs{
+  color: rgb(18, 179, 136);
 }

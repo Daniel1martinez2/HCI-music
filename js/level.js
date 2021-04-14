@@ -17,8 +17,8 @@ const createLevel = ({
     error: 0,
     repetition: 0,
     outOfTime: false, 
-    
   }
+  let wasStarted = false; // obligate to start pattern 
   const cells = matrix.querySelectorAll('.cell');
   //init size of the cells based on the size given
   const initCellsSize = ()=>{
@@ -63,8 +63,8 @@ const createLevel = ({
   }
   //pattern performance 
   const simonSays = () => {
+    wasStarted = true; 
     if (variables.passed) return
-    message[1].classList.add('hidden');
     let index = 0;
     let interval = setInterval(() => {
       resetMatrix();
@@ -76,7 +76,7 @@ const createLevel = ({
         if (index >= pattern.length) {
           clearInterval(interval);
           setTimeout(() => {
-            console.log('ya');
+            //finish pattern
             freezeClick = false;
             resetMatrix();
           }, noteTime);
@@ -86,23 +86,21 @@ const createLevel = ({
   };
   //check if the current selected cell match pattern current position
   const verify = (patternList) => {
+    console.log(wasStarted);
     const cellsObj = matrix.querySelectorAll('.cell');
     let index = 0;
     cellsObj.forEach((obj, i) => {
       obj.addEventListener('click', () => {
-        console.log(variables.passed);
+        if(!wasStarted) return; 
         if (variables.passed) return
         beep(i); //note sounds
         if (obj === cellsObj[patternList[index]]) {
           //well done
           obj.style.backgroundColor = '#00FFFF';
           if (index >= patternList.length - 1) {
+            //level passed 
             variables.passed = true;
-            console.log('finish');
-            //IMPORTANT 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
             finishLevelFunc();
-            message[1].classList.remove('hidden');
-            message[1].classList.add('active');
             index = 0;
           } else {
             index++;
@@ -111,7 +109,6 @@ const createLevel = ({
           //error
           obj.style.backgroundColor = '#DF6A1E';
           variables.error++;
-          console.log(variables.error + ' error');
           freezeClick = true;
           setTimeout(() => {
             resetMatrix();
@@ -135,9 +132,9 @@ const createLevel = ({
       seconds = seconds < 10 ? "0" + seconds : seconds;
       timerDisplay.innerText = minutes + ":" + seconds;
       if (--timer < 0) {
+        //lost by time
         timer = 0;
         outOfTime= true; 
-        console.log(`time is ${variables.outOfTime}`);
         lostByTimeFunc(); 
         clearInterval(timerInterval); 
       }

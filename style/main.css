@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap");
 * {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: 'Londrina Solid', cursive;
 }
 
 .text {
@@ -43,6 +45,25 @@
 .screen__content img {
   width: 50vmin;
   margin-bottom: 5vmin;
+}
+
+.instructions {
+  position: relative;
+  width: 100vw;
+}
+
+.instructions video {
+  width: 100%;
+}
+
+.instructions button {
+  font-size: 3vmin;
+  position: absolute;
+  bottom: -2vmin;
+  left: 50%;
+  right: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .game {
@@ -182,5 +203,13 @@ button:hover {
 
 .win {
   background-color: #3762EF;
+}
+
+.time {
+  color: #3762EF;
+}
+
+.level-msgs {
+  color: #12b388;
 }
 /*# sourceMappingURL=main.css.map */

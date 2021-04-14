@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xample ✅</title>
+  <title>HCI 🎵</title>
   <link rel="stylesheet" href="./style/main.css">
 </head>
 
@@ -17,13 +17,20 @@
       <button class="screen__btn">Play</button>
     </div>
   </main>
+  <!-- instructions  -->
+  <main class="instructions hidden">
+    <video class="instructions__vid" width="250">
+      <source src="./lib/videos/instructions.mp4" type="video/webm">
+    </video>
+    <button class="instructions__btn">Continuar</button>
+  </main>
   <!-- win screen -->
   <main class="result win hidden ">
-    <img src="./lib/img/win.jpg" alt="">
+    <img src="./lib/img/win.png" alt="">
   </main>
   <!-- loose screen -->
   <main class="result loose hidden">
-    <img src="./lib/img/loose.jpg" alt="">
+    <img src="./lib/img/loose.png" alt="">
   </main>
   <!-- game screen -->
   <main class="game hidden">
@@ -74,7 +81,7 @@
         <h1 class="time text">00:00</h1>
       </div>
       <div class="game__message">
-        <h1 class="text">Level 1</h1>
+        <h1 class="text level-msgs">Level 1</h1>
       </div>
       <img src="./lib/img/mic.png" alt="">
     </aside>
