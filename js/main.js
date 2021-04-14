@@ -5,12 +5,12 @@ const mainScreen = document.querySelector('.game');
 const winScreen = document.querySelector('.win');
 const looseScreen = document.querySelector('.loose');
 const levelMsgs = document.querySelector('.level-msgs');
-const instructionsScreen = document.querySelector('.instructions'); 
-const vidInstructions = document.querySelector('.instructions__vid'); 
-const instructionsBtn = document.querySelector('.instructions__btn'); 
+const instructionsScreen = document.querySelector('.instructions');
+const vidInstructions = document.querySelector('.instructions__vid');
+const instructionsBtn = document.querySelector('.instructions__btn');
+const pressStartMsg = document.querySelector('.innit-message-start'); 
 levelMsgs.innerText = 'level 1';
 //main variables
-
 const matrix = document.querySelector('.matrix');
 const cells = matrix.querySelectorAll('.cell');
 const button = document.querySelector('.game__start-btn');
@@ -18,10 +18,14 @@ const noteTime = 2000 / 2.5;
 const timerText = document.querySelector('.time');
 let freezeClick = false;
 let currentLevel; //represents the game current displayed
+levelTime = {
+  value: 0
+}
 const result = {
   error: 0,
   repetition: 0,
-  passed:[],
+  passed: [],
+  usedTime: [],
 };
 const settingCurrentLevel = (level) => {
   currentLevel = level;
@@ -48,22 +52,25 @@ const level1 = createLevel({
     second: [11, 34, 98]
   },
   size: 3,
-  time: 15,
+  time: 20,
   timerDisplay: timerText,
   finishLevelFunc: () => {
-    result.passed.push(true); 
-    console.log(result);
+    result.usedTime.push(timerText.innerText);
+    result.passed.push(true);
     //setting current level
     settingCurrentLevel(level2);
     levelMsgs.innerText = 'level 2';
+    console.log(levelTime);
   },
   lostByTimeFunc: () => {
-    result.error = level1.variables.error; 
-    result.repetition = level1.variables.repetition -1; 
-    result.passed.push(false,false,false); 
-    console.log(result);
+    result.error = level1.variables.error;
+    result.repetition = level1.variables.repetition - 1;
+    result.repetition = result.repetition < 0 ? 0 : result.repetition;
+    result.passed.push(false, false, false);
     handleLoose();
-  }
+  },
+  levelTime,
+  allowedErrors:3,
 });
 // level 2 ---------------------------------------------------------
 const level2 = createLevel({
@@ -74,20 +81,25 @@ const level2 = createLevel({
     second: [11, 34, 98]
   },
   size: 4,
-  time: 25,
+  time: 35,
   timerDisplay: timerText,
   finishLevelFunc: () => {
-    result.passed.push(true); 
+    result.usedTime.push(timerText.innerText);
+    result.passed.push(true);
     settingCurrentLevel(level3);
     levelMsgs.innerText = 'level 3';
 
   },
-  lostByTimeFunc: () => { 
-    result.error = level1.variables.error+level2.variables.error; 
-    result.repetition = level1.variables.repetition+level2.variables.repetition -2; 
-    result.passed.push(false,false); 
+  lostByTimeFunc: () => {
+    result.usedTime.push(0, 0, 0)
+    result.error = level1.variables.error + level2.variables.error;
+    result.repetition = level1.variables.repetition + level2.variables.repetition - 2;
+    result.repetition = result.repetition < 0 ? 0 : result.repetition;
+    result.passed.push(false, false);
     handleLoose();
-  }
+  },
+  levelTime,
+  allowedErrors:7,
 });
 //level 3 ---------------------------------------------------------
 const level3 = createLevel({
@@ -98,20 +110,24 @@ const level3 = createLevel({
     second: [11, 34, 98]
   },
   size: 5,
-  time: 30,
+  time: 45,
   timerDisplay: timerText,
   finishLevelFunc: () => {
-    result.error = level1.variables.error+level2.variables.error+level3.variables.error; 
-    result.repetition = level1.variables.repetition+level2.variables.repetition+level3.variables.repetition-3;  
-    result.passed.push(true); 
+    result.usedTime.push(timerText.innerText);
+    result.error = level1.variables.error + level2.variables.error + level3.variables.error;
+    result.repetition = level1.variables.repetition + level2.variables.repetition + level3.variables.repetition - 3;
+    result.passed.push(true);
     handleWin();
   },
   lostByTimeFunc: () => {
-    result.error = level1.variables.error+level2.variables.error+level3.variables.error;
-    result.repetition = level1.variables.repetition+level2.variables.repetition+level3.variables.repetition-3;  
-    result.passed.push(false); 
+    result.error = level1.variables.error + level2.variables.error + level3.variables.error;
+    result.repetition = level1.variables.repetition + level2.variables.repetition + level3.variables.repetition - 3;
+    result.repetition = result.repetition < 0 ? 0 : result.repetition;
+    result.passed.push(false);
     handleLoose();
-  }
+  },
+  levelTime,
+  allowedErrors:8,
 });
 //init level >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 currentLevel = level1;
@@ -128,16 +144,17 @@ button.addEventListener('click', () => {
   freezeClick = true;
   currentLevel.simonSays();
   currentLevel.variables.repetition++;
+  pressStartMsg.classList.add('hidden'); 
 });
 firstScreenBtn.addEventListener('click', () => {
   firstScreen.classList.add('hidden');
-  instructionsScreen.classList.remove('hidden'); 
-  vidInstructions.play(); 
+  instructionsScreen.classList.remove('hidden');
+  vidInstructions.play();
   //mainScreen.classList.remove('hidden');
   //currentLevel.startLevel();
 })
 instructionsBtn.addEventListener('click', () => {
-  instructionsScreen.classList.add('hidden'); 
+  instructionsScreen.classList.add('hidden');
   mainScreen.classList.remove('hidden');
   currentLevel.startLevel();
 })

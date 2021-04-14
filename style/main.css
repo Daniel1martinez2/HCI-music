@@ -4,7 +4,19 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: 'Londrina Solid', cursive;
+  font-family: "Londrina Solid", cursive;
+}
+
+.innit-message-start {
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 6vmin;
+  color: #3762ef;
 }
 
 .text {
@@ -137,13 +149,8 @@
   margin-bottom: 4vmin;
 }
 
-.game__message h3 {
-  font-size: 1.6vmin;
-  color: #0e936f;
-  text-align: center;
-}
-
 .matrix {
+  position: relative;
   background-color: blue;
   width: 50vmin;
   height: 50vmin;
@@ -168,11 +175,11 @@
 }
 
 .matrix .cell:hover {
-  border: solid #00FFFF 4px;
+  border: solid #00ffff 4px;
 }
 
 button {
-  background: #3762EF;
+  background: #3762ef;
   color: white;
   padding: 6px;
   width: 8em;
@@ -209,15 +216,15 @@ button:hover {
 }
 
 .loose {
-  background-color: #B6744F;
+  background-color: #b6744f;
 }
 
 .win {
-  background-color: #3762EF;
+  background-color: #3762ef;
 }
 
 .time {
-  color: #3762EF;
+  color: #3762ef;
 }
 
 .level-msgs {

@@ -6,7 +6,9 @@ const createLevel = ({
   time,
   timerDisplay, 
   finishLevelFunc,
-  lostByTimeFunc
+  lostByTimeFunc, 
+  levelTime, 
+  allowedErrors
 }) => {
   const variables = {
     passed: false,
@@ -108,7 +110,10 @@ const createLevel = ({
         } else {
           //error
           obj.style.backgroundColor = '#DF6A1E';
-          variables.error++;
+          variables.error+=10;
+          if(variables.error >= allowedErrors*10){
+            lostByTimeFunc(); 
+          }
           freezeClick = true;
           setTimeout(() => {
             resetMatrix();
@@ -131,6 +136,7 @@ const createLevel = ({
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
       timerDisplay.innerText = minutes + ":" + seconds;
+      levelTime.value = seconds; 
       if (--timer < 0) {
         //lost by time
         timer = 0;
@@ -147,6 +153,7 @@ const createLevel = ({
   }
   //init state
   const startLevel = () => {
+    pressStartMsg.classList.remove('hidden'); 
     initCellsSize(); 
     resetMatrix();
     verify(pattern);

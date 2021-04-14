@@ -1,75 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Londrina Solid', cursive;
+  font-family: "Londrina Solid", cursive;
 }
-.text{
+.innit-message-start {
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 6vmin;
+  color: #3762ef;
+}
+.text {
   font-size: 3vmin;
 }
-.screen{
-  background-image: url('../lib/img/background.png');
+.screen {
+  background-image: url("../lib/img/background.png");
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20vmin;
-  &__content{
+  &__content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    img{
+    img {
       width: 50vmin;
       margin-bottom: 5vmin;
     }
   }
 }
-.instructions{
+.instructions {
   position: relative;
   width: 100vw;
-  video{
+  video {
     width: 100%;
   }
-  button{
+  button {
     font-size: 3vmin;
     position: absolute;
     bottom: -2vmin;
     left: 50%;
     right: 50%;
-    transform: translate(-50%,-50%);
-
+    transform: translate(-50%, -50%);
   }
 }
 .game {
-  background-image: url('../lib/img/background.png');
+  background-image: url("../lib/img/background.png");
   background-size: cover;
   display: flex;
   justify-content: center;
   padding: 20px;
-  &__prime{
+  &__prime {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-right: 5vmin;
     // background-color: orange;
   }
-  &__logo{
+  &__logo {
     width: 40vmin;
     margin-bottom: 20px;
   }
-  &__msgs-rigth{
+  &__msgs-rigth {
     // background-color: violet;
     display: flex;
     flex-direction: column;
     justify-content: end;
     padding-bottom: 5vmin;
-    img{
+    img {
       width: 10vmin;
     }
   }
-  &__message{
+  &__message {
     background-color: white;
     width: 15vmin;
     height: 10vmin;
@@ -80,16 +89,11 @@
     align-items: center;
     border-radius: 5px;
     margin-bottom: 4vmin;
-    h3{
-      font-size: 1.6vmin;
-      color: rgb(14, 147, 111);
-      text-align: center;
-
-    }
   }
 }
 
 .matrix {
+  position: relative;
   background-color: blue;
   width: 50vmin;
   height: 50vmin;
@@ -97,7 +101,7 @@
   flex-wrap: wrap;
   align-content: flex-start;
   overflow: hidden;
-  outline: solid white 6px ;
+  outline: solid white 6px;
   margin-bottom: 20px;
 
   .cell {
@@ -106,14 +110,14 @@
     height: 10vmin;
     background-color: gray;
     cursor: pointer;
-    &:hover{
-      border: solid #00FFFF 4px;
+    &:hover {
+      border: solid #00ffff 4px;
     }
   }
 }
 
 button {
-  background: #3762EF;
+  background: #3762ef;
   color: white;
   padding: 6px;
   width: 8em;
@@ -122,10 +126,9 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
-  &:hover{
+  &:hover {
     background: #234bcd;
   }
-  
 }
 
 .hidden {
@@ -138,22 +141,22 @@ button {
 .wrong {
   color: red;
 }
-.result{
+.result {
   width: 100vw;
   height: 100vh;
-  img{
+  img {
     width: 100%;
   }
 }
-.loose{
-  background-color: #B6744F;
+.loose {
+  background-color: #b6744f;
 }
-.win{
-  background-color: #3762EF;
+.win {
+  background-color: #3762ef;
 }
-.time{
-  color: #3762EF;
+.time {
+  color: #3762ef;
 }
-.level-msgs{
+.level-msgs {
   color: rgb(18, 179, 136);
 }
