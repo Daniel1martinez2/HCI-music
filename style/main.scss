@@ -74,10 +74,18 @@
     width: 15vmin;
     height: 10vmin;
     display: flex;
+    padding: 2vmin;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     margin-bottom: 4vmin;
+    h3{
+      font-size: 1.6vmin;
+      color: rgb(14, 147, 111);
+      text-align: center;
+
+    }
   }
 }
 
