@@ -89,7 +89,7 @@ const level2 = createLevel({
   },
   lostFunc: handleLoose,
   levelTime,
-  allowedErrors:7,
+  allowedErrors:2,
 });
 //level 3 ---------------------------------------------------------
 const level3 = createLevel({
@@ -112,7 +112,7 @@ const level3 = createLevel({
   },
   lostFunc: handleLoose,
   levelTime,
-  allowedErrors:8,
+  allowedErrors:2,
 });
 //init level >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 currentLevel = level1;
@@ -135,8 +135,6 @@ firstScreenBtn.addEventListener('click', () => {
   firstScreen.classList.add('hidden');
   instructionsScreen.classList.remove('hidden');
   vidInstructions.play();
-  //mainScreen.classList.remove('hidden');
-
 }); 
 instructionsBtn.addEventListener('click', () => {
   instructionsScreen.classList.add('hidden');
@@ -146,9 +144,12 @@ instructionsBtn.addEventListener('click', () => {
 restartLevel.addEventListener('click',()=>{
   mainScreen.classList.remove('hidden');
   looseScreen.classList.add('hidden');
-  console.log(currentLevel);
   currentLevel.startTimer(); 
-  currentLevel.variables.pattern = [0,0,0]; 
+  currentLevel.variables.pattern.forEach((sound,i) => { 
+    currentLevel.variables.pattern[i]= parseInt(Math.random()*Math.pow(currentLevel.variables.size,2)); 
+    console.log(currentLevel.variables.pattern);
+  });
+  //currentLevel.variables.pattern = [0,0,0]; 
   pressStartMsg.classList.remove('hidden'); 
   currentLevel.variables.wasStarted = false
 
