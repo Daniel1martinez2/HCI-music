@@ -143,13 +143,20 @@ button {
 }
 .result {
   width: 100vw;
-  height: 100vh;
   img {
     width: 100%;
   }
 }
 .loose {
   background-color: #b6744f;
+  position: relative;
+  &__restart{
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 8vmin;
+    transform: translate(-50%,-50%);
+  }
 }
 .win {
   background-color: #3762ef;

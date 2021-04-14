@@ -9,6 +9,7 @@ const instructionsScreen = document.querySelector('.instructions');
 const vidInstructions = document.querySelector('.instructions__vid');
 const instructionsBtn = document.querySelector('.instructions__btn');
 const pressStartMsg = document.querySelector('.innit-message-start'); 
+const restartLevel = document.querySelector('.loose__restart'); 
 levelMsgs.innerText = 'level 1';
 //main variables
 const matrix = document.querySelector('.matrix');
@@ -26,6 +27,7 @@ const result = {
   repetition: 0,
   passed: [],
   usedTime: [],
+  gameResetTimes:0
 };
 const settingCurrentLevel = (level) => {
   currentLevel = level;
@@ -62,15 +64,10 @@ const level1 = createLevel({
     levelMsgs.innerText = 'level 2';
     console.log(levelTime);
   },
-  lostByTimeFunc: () => {
-    result.error = level1.variables.error;
-    result.repetition = level1.variables.repetition - 1;
-    result.repetition = result.repetition < 0 ? 0 : result.repetition;
-    result.passed.push(false, false, false);
-    handleLoose();
-  },
+  lostFunc: handleLoose
+  ,
   levelTime,
-  allowedErrors:3,
+  allowedErrors:1,
 });
 // level 2 ---------------------------------------------------------
 const level2 = createLevel({
@@ -90,14 +87,7 @@ const level2 = createLevel({
     levelMsgs.innerText = 'level 3';
 
   },
-  lostByTimeFunc: () => {
-    result.usedTime.push(0, 0, 0)
-    result.error = level1.variables.error + level2.variables.error;
-    result.repetition = level1.variables.repetition + level2.variables.repetition - 2;
-    result.repetition = result.repetition < 0 ? 0 : result.repetition;
-    result.passed.push(false, false);
-    handleLoose();
-  },
+  lostFunc: handleLoose,
   levelTime,
   allowedErrors:7,
 });
@@ -116,16 +106,11 @@ const level3 = createLevel({
     result.usedTime.push(timerText.innerText);
     result.error = level1.variables.error + level2.variables.error + level3.variables.error;
     result.repetition = level1.variables.repetition + level2.variables.repetition + level3.variables.repetition - 3;
+    result.gameResetTimes = level1.variables.gameResetTimes + level2.variables.gameResetTimes + level3.variables.gameResetTimes;
     result.passed.push(true);
     handleWin();
   },
-  lostByTimeFunc: () => {
-    result.error = level1.variables.error + level2.variables.error + level3.variables.error;
-    result.repetition = level1.variables.repetition + level2.variables.repetition + level3.variables.repetition - 3;
-    result.repetition = result.repetition < 0 ? 0 : result.repetition;
-    result.passed.push(false);
-    handleLoose();
-  },
+  lostFunc: handleLoose,
   levelTime,
   allowedErrors:8,
 });
@@ -151,10 +136,20 @@ firstScreenBtn.addEventListener('click', () => {
   instructionsScreen.classList.remove('hidden');
   vidInstructions.play();
   //mainScreen.classList.remove('hidden');
-  //currentLevel.startLevel();
-})
+
+}); 
 instructionsBtn.addEventListener('click', () => {
   instructionsScreen.classList.add('hidden');
   mainScreen.classList.remove('hidden');
   currentLevel.startLevel();
-})
+}); 
+restartLevel.addEventListener('click',()=>{
+  mainScreen.classList.remove('hidden');
+  looseScreen.classList.add('hidden');
+  console.log(currentLevel);
+  currentLevel.startTimer(); 
+  currentLevel.variables.pattern = [0,0,0]; 
+  pressStartMsg.classList.remove('hidden'); 
+  currentLevel.variables.wasStarted = false
+
+}); 

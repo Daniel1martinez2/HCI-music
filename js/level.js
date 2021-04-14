@@ -6,7 +6,7 @@ const createLevel = ({
   time,
   timerDisplay, 
   finishLevelFunc,
-  lostByTimeFunc, 
+  lostFunc, 
   levelTime, 
   allowedErrors
 }) => {
@@ -19,8 +19,13 @@ const createLevel = ({
     error: 0,
     repetition: 0,
     outOfTime: false, 
+    wasStarted: false,
+    gameResetTimes: 0,
   }
-  let wasStarted = false; // obligate to start pattern 
+  let alreadyLoose = false; 
+  const changePattern = (newPattern)=>{
+    
+  }
   const cells = matrix.querySelectorAll('.cell');
   //init size of the cells based on the size given
   const initCellsSize = ()=>{
@@ -65,17 +70,17 @@ const createLevel = ({
   }
   //pattern performance 
   const simonSays = () => {
-    wasStarted = true; 
+    variables.wasStarted = true; 
     if (variables.passed) return
     let index = 0;
     let interval = setInterval(() => {
       resetMatrix();
       setTimeout(() => {
-        beep(pattern[index]);
-        cells[pattern[index]].style.backgroundColor = '#00FFFF';
+        beep(variables.pattern[index]);
+        cells[variables.pattern[index]].style.backgroundColor = '#00FFFF';
         index++;
         //stop interval
-        if (index >= pattern.length) {
+        if (index >= variables.pattern.length) {
           clearInterval(interval);
           setTimeout(() => {
             //finish pattern
@@ -87,19 +92,18 @@ const createLevel = ({
     }, noteTime);
   };
   //check if the current selected cell match pattern current position
-  const verify = (patternList) => {
-    console.log(wasStarted);
+  const verify = () => {
     const cellsObj = matrix.querySelectorAll('.cell');
     let index = 0;
     cellsObj.forEach((obj, i) => {
       obj.addEventListener('click', () => {
-        if(!wasStarted) return; 
+        if(!variables.wasStarted) return; 
         if (variables.passed) return
         beep(i); //note sounds
-        if (obj === cellsObj[patternList[index]]) {
+        if (obj === cellsObj[variables.pattern[index]]) {
           //well done
           obj.style.backgroundColor = '#00FFFF';
-          if (index >= patternList.length - 1) {
+          if (index >= variables.pattern.length - 1) {
             //level passed 
             variables.passed = true;
             finishLevelFunc();
@@ -112,7 +116,11 @@ const createLevel = ({
           obj.style.backgroundColor = '#DF6A1E';
           variables.error+=10;
           if(variables.error >= allowedErrors*10){
-            lostByTimeFunc(); 
+            variables.error = 0; 
+            variables.gameResetTimes ++; 
+            alreadyLoose = true; 
+            lostFunc();
+            console.log(variables);
           }
           freezeClick = true;
           setTimeout(() => {
@@ -137,11 +145,12 @@ const createLevel = ({
       seconds = seconds < 10 ? "0" + seconds : seconds;
       timerDisplay.innerText = minutes + ":" + seconds;
       levelTime.value = seconds; 
-      if (--timer < 0) {
+      if (--timer < 0 || alreadyLoose ) {
+        alreadyLoose = false; 
         //lost by time
         timer = 0;
         outOfTime= true; 
-        lostByTimeFunc(); 
+        lostFunc(); 
         clearInterval(timerInterval); 
       }
       if (variables.passed){
@@ -156,9 +165,9 @@ const createLevel = ({
     pressStartMsg.classList.remove('hidden'); 
     initCellsSize(); 
     resetMatrix();
-    verify(pattern);
+    verify();
     startTimer();
-  }
+  }; 
   return {
     variables,
     setPassed,

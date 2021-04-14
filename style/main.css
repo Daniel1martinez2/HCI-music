@@ -208,7 +208,6 @@ button:hover {
 
 .result {
   width: 100vw;
-  height: 100vh;
 }
 
 .result img {
@@ -217,6 +216,16 @@ button:hover {
 
 .loose {
   background-color: #b6744f;
+  position: relative;
+}
+
+.loose__restart {
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 8vmin;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .win {
