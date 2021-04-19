@@ -48,13 +48,13 @@ const handleWin = () => {
 //level 1 ---------------------------------------------------------
 const level1 = createLevel({
   matrix,
-  pattern: [1, 2, 3],
+  pattern: [5,2,8,1,3,7],
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
   },
   size: 3,
-  time: 20,
+  time: 40,
   timerDisplay: timerText,
   finishLevelFunc: () => {
     result.usedTime.push(timerText.innerText);
@@ -72,13 +72,13 @@ const level1 = createLevel({
 // level 2 ---------------------------------------------------------
 const level2 = createLevel({
   matrix,
-  pattern: [3, 2, 1, 0],
+  pattern: [14,8,3,9,1,12,15,2],
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
   },
   size: 4,
-  time: 35,
+  time: 45,
   timerDisplay: timerText,
   finishLevelFunc: () => {
     result.usedTime.push(timerText.innerText);
@@ -94,13 +94,13 @@ const level2 = createLevel({
 //level 3 ---------------------------------------------------------
 const level3 = createLevel({
   matrix,
-  pattern: [4, 5, 9, 1],
+  pattern: [20,10,1,15,12,5,24,22],
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
   },
   size: 5,
-  time: 45,
+  time: 50,
   timerDisplay: timerText,
   finishLevelFunc: () => {
     result.usedTime.push(timerText.innerText);
