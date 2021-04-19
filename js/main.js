@@ -3,6 +3,7 @@ const firstScreenBtn = document.querySelector('.screen__btn');
 const firstScreen = document.querySelector('.screen');
 const mainScreen = document.querySelector('.game');
 const winScreen = document.querySelector('.win');
+const restartPattern = document.querySelector('.restart-btn'); 
 const looseScreen = document.querySelector('.loose');
 const levelMsgs = document.querySelector('.level-msgs');
 const instructionsScreen = document.querySelector('.instructions');
@@ -18,6 +19,7 @@ const button = document.querySelector('.game__start-btn');
 const noteTime = 2000 / 2.5;
 const timerText = document.querySelector('.time');
 let freezeClick = false;
+restartPattern.classList.add('hidden'); 
 let currentLevel; //represents the game current displayed
 levelTime = {
   value: 0
@@ -35,9 +37,11 @@ const settingCurrentLevel = (level) => {
 }
 //win and loose general functions
 const handleLoose = () => {
+  restartPattern.classList.add('hidden'); 
   console.log(result);
   mainScreen.classList.add('hidden');
   looseScreen.classList.remove('hidden');
+  button.classList.remove('hidden'); 
 }
 const handleWin = () => {
   console.log(result);
@@ -48,7 +52,7 @@ const handleWin = () => {
 //level 1 ---------------------------------------------------------
 const level1 = createLevel({
   matrix,
-  pattern: [5,2,8,1,3,7],
+  pattern: [5,2,8,1,3,7], //5 / 4 
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
@@ -57,12 +61,14 @@ const level1 = createLevel({
   time: 40,
   timerDisplay: timerText,
   finishLevelFunc: () => {
+    button.classList.remove('hidden'); 
     result.usedTime.push(timerText.innerText);
     result.passed.push(true);
     //setting current level
     settingCurrentLevel(level2);
     levelMsgs.innerText = 'level 2';
     console.log(levelTime);
+    restartPattern.classList.add('hidden'); 
   },
   lostFunc: handleLoose
   ,
@@ -72,7 +78,7 @@ const level1 = createLevel({
 // level 2 ---------------------------------------------------------
 const level2 = createLevel({
   matrix,
-  pattern: [14,8,3,9,1,12,15,2],
+  pattern: [14,8,3,9,1], //  6 / 7
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
@@ -81,6 +87,8 @@ const level2 = createLevel({
   time: 45,
   timerDisplay: timerText,
   finishLevelFunc: () => {
+    button.classList.remove('hidden'); 
+    restartPattern.classList.add('hidden'); 
     result.usedTime.push(timerText.innerText);
     result.passed.push(true);
     settingCurrentLevel(level3);
@@ -94,7 +102,7 @@ const level2 = createLevel({
 //level 3 ---------------------------------------------------------
 const level3 = createLevel({
   matrix,
-  pattern: [20,10,1,15,12,5,24,22],
+  pattern: [20,10,1,15,12,5,24,22], // 8 / 9 / 10
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
@@ -125,12 +133,19 @@ document.addEventListener("click", e => {
   }
 }, true);
 //start simon pattern performance 
-button.addEventListener('click', () => {
+const deployPattern = () => {
   freezeClick = true;
   currentLevel.simonSays();
   currentLevel.variables.repetition++;
   pressStartMsg.classList.add('hidden'); 
+}; 
+
+button.addEventListener('click', () => {
+  restartPattern.classList.remove('hidden'); 
+  deployPattern(); 
+  button.classList.add('hidden'); 
 });
+restartPattern.addEventListener('click', deployPattern); 
 firstScreenBtn.addEventListener('click', () => {
   firstScreen.classList.add('hidden');
   instructionsScreen.classList.remove('hidden');
