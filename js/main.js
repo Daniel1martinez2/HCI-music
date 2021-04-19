@@ -29,7 +29,7 @@ const result = {
   repetition: 0,
   passed: [],
   usedTime: [],
-  gameResetTimes:0
+  gameResetTimes:0,
 };
 const settingCurrentLevel = (level) => {
   currentLevel = level;
@@ -37,14 +37,19 @@ const settingCurrentLevel = (level) => {
 }
 //win and loose general functions
 const handleLoose = () => {
+  currentLevel.resetMatrix(); 
   restartPattern.classList.add('hidden'); 
-  console.log(result);
   mainScreen.classList.add('hidden');
   looseScreen.classList.remove('hidden');
   button.classList.remove('hidden'); 
 }
+const total =  ()=>{
+  const finalTotal = 200-result.error-(result.repetition*5)-(result.gameResetTimes*10) ; 
+  return finalTotal >= 0 ? finalTotal : 0;
+}
 const handleWin = () => {
-  console.log(result);
+  
+  console.log(total(), 'total>>>>>>');
   mainScreen.classList.add('hidden');
   winScreen.classList.remove('hidden');
 }
@@ -52,13 +57,13 @@ const handleWin = () => {
 //level 1 ---------------------------------------------------------
 const level1 = createLevel({
   matrix,
-  pattern: [5,2,8,1,3,7], //5 / 4 
+  pattern: [5,2,8,3,1], //5 / 4 
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
   },
   size: 3,
-  time: 40,
+  time: 20,
   timerDisplay: timerText,
   finishLevelFunc: () => {
     button.classList.remove('hidden'); 
@@ -67,18 +72,17 @@ const level1 = createLevel({
     //setting current level
     settingCurrentLevel(level2);
     levelMsgs.innerText = 'level 2';
-    console.log(levelTime);
     restartPattern.classList.add('hidden'); 
   },
   lostFunc: handleLoose
   ,
   levelTime,
-  allowedErrors:3,
+  allowedErrors:5,
 });
 // level 2 ---------------------------------------------------------
 const level2 = createLevel({
   matrix,
-  pattern: [14,8,3,9,1], //  6 / 7
+  pattern: [14,8,5,10,12,2], 
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
@@ -97,12 +101,12 @@ const level2 = createLevel({
   },
   lostFunc: handleLoose,
   levelTime,
-  allowedErrors:2,
+  allowedErrors:5,
 });
 //level 3 ---------------------------------------------------------
 const level3 = createLevel({
   matrix,
-  pattern: [20,10,1,15,12,5,24,22], // 8 / 9 / 10
+  pattern: [20,10,1,12,5,22,14,18], // 8 / 9 / 10
   colors: {
     first: [153, 179, 250],
     second: [11, 34, 98]
@@ -120,7 +124,7 @@ const level3 = createLevel({
   },
   lostFunc: handleLoose,
   levelTime,
-  allowedErrors:2,
+  allowedErrors:5,
 });
 //init level >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 currentLevel = level1;
@@ -162,9 +166,7 @@ restartLevel.addEventListener('click',()=>{
   currentLevel.startTimer(); 
   currentLevel.variables.pattern.forEach((sound,i) => { 
     currentLevel.variables.pattern[i]= parseInt(Math.random()*Math.pow(currentLevel.variables.size,2)); 
-    console.log(currentLevel.variables.pattern);
   });
   pressStartMsg.classList.remove('hidden'); 
   currentLevel.variables.wasStarted = false
-
 }); 

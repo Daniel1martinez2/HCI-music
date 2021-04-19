@@ -21,11 +21,9 @@ const createLevel = ({
     outOfTime: false, 
     wasStarted: false,
     gameResetTimes: 0,
+    verifyIndex: 0
   }
   let alreadyLoose = false; 
-  const changePattern = (newPattern)=>{
-    
-  }
   const cells = matrix.querySelectorAll('.cell');
   //init size of the cells based on the size given
   const initCellsSize = ()=>{
@@ -62,6 +60,7 @@ const createLevel = ({
   };
   //reset matrix appearance 
   const resetMatrix = () => {
+    variables.verifyIndex = 0; 
     cells.forEach((obj, index) => {
       const cellsColor = gradientTransition(...variables.colors.first, ...variables.colors.second, cells.length);
       obj.style.backgroundColor = `rgb(
@@ -94,22 +93,22 @@ const createLevel = ({
   //check if the current selected cell match pattern current position
   const verify = () => {
     const cellsObj = matrix.querySelectorAll('.cell');
-    let index = 0;
+    // let verifyIndex = 0;
     cellsObj.forEach((obj, i) => {
       obj.addEventListener('click', () => {
         if(!variables.wasStarted) return; 
         if (variables.passed) return
         beep(i); //note sounds
-        if (obj === cellsObj[variables.pattern[index]]) {
+        if (obj === cellsObj[variables.pattern[variables.verifyIndex]]) {
           //well done
           obj.style.backgroundColor = '#00FFFF';
-          if (index >= variables.pattern.length - 1) {
+          if (variables.verifyIndex >= variables.pattern.length - 1) {
             //level passed 
             variables.passed = true;
             finishLevelFunc();
-            index = 0;
+            variables.verifyIndex = 0;
           } else {
-            index++;
+            variables.verifyIndex++;
           }
         } else {
           //error
@@ -127,7 +126,7 @@ const createLevel = ({
             resetMatrix();
             freezeClick = false;
           }, 1500);
-          index = 0;
+          variables.verifyIndex = 0;
         }
       });
     })
