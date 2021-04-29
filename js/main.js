@@ -45,7 +45,7 @@ const handleLoose = () => {
 }
 const total =  ()=>{
   const finalTotal = 200-result.error-(result.repetition*5)-(result.gameResetTimes*10) ; 
-  return finalTotal >= 0 ? finalTotal : 0;
+  return finalTotal >= 0 ? finalTotal >200? 200: finalTotal: 0;
 }
 const handleWin = () => {
   
@@ -122,9 +122,20 @@ const level3 = createLevel({
     result.passed.push(true);
     handleWin();
   },
-  lostFunc: handleLoose,
+  lostFunc: ()=>{
+    if(level3.variables.repetition <= 2){
+      handleLoose(); 
+    }else{
+      result.usedTime.push(timerText.innerText);
+      result.error = level1.variables.error + level2.variables.error + level3.variables.error;
+      result.repetition = level1.variables.repetition + level2.variables.repetition + level3.variables.repetition - 3;
+      result.gameResetTimes = level1.variables.gameResetTimes + level2.variables.gameResetTimes + level3.variables.gameResetTimes;
+      result.passed.push(true);
+      handleWin();
+    }
+  },
   levelTime,
-  allowedErrors:5,
+  allowedErrors:3,
 });
 //init level >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 currentLevel = level1;
@@ -164,9 +175,11 @@ restartLevel.addEventListener('click',()=>{
   mainScreen.classList.remove('hidden');
   looseScreen.classList.add('hidden');
   currentLevel.startTimer(); 
-  currentLevel.variables.pattern.forEach((sound,i) => { 
-    currentLevel.variables.pattern[i]= parseInt(Math.random()*Math.pow(currentLevel.variables.size,2)); 
-  });
+  if(currentLevel != level3){
+    currentLevel.variables.pattern.forEach((sound,i) => { 
+      currentLevel.variables.pattern[i]= parseInt(Math.random()*Math.pow(currentLevel.variables.size,2)); 
+    });
+  }
   pressStartMsg.classList.remove('hidden'); 
   currentLevel.variables.wasStarted = false
 }); 
